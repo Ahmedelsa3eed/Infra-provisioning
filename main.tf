@@ -35,31 +35,12 @@ resource "azurerm_private_dns_zone" "zone" {
   resource_group_name = azurerm_resource_group.rg.name
 }
 
-resource "azurerm_private_dns_zone_virtual_network_link" "link" {
+resource "azurerm_private_dns_zone_virtual_network_link" "example" {
   name                  = "exampleVnetZone.com"
   private_dns_zone_name = azurerm_private_dns_zone.zone.name
   virtual_network_id    = azurerm_virtual_network.ABI-network.id
   resource_group_name   = azurerm_resource_group.rg.name
 }
-
-# Create a Network Security Group
-# resource "azurerm_network_security_group" "example" {
-#   name                = "example-nsg"
-#   location            = azurerm_resource_group.rg.location
-#   resource_group_name = azurerm_resource_group.rg.name
-
-#   security_rule {
-#     name                       = "AllowMySQL"
-#     priority                   = 100
-#     direction                  = "Inbound"
-#     access                     = "Allow"
-#     protocol                   = "Tcp"
-#     source_port_range          = "*"
-#     destination_port_range     = "3306"  # MySQL default port
-#     source_address_prefix      = azurerm_subnet.internal.address_prefixes[0]
-#     destination_address_prefix = "*"
-#   }
-# }
 
 # Create a subnet for internal resources only
 resource "azurerm_subnet" "internal" {
@@ -67,18 +48,6 @@ resource "azurerm_subnet" "internal" {
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.ABI-network.name
   address_prefixes     = ["10.0.2.0/24"]
-}
-
-resource "azurerm_private_dns_zone" "example" {
-  name                = "example.mysql.database.azure.com"
-  resource_group_name = azurerm_resource_group.rg.name
-}
-
-resource "azurerm_private_dns_zone_virtual_network_link" "example" {
-  name                  = "exampleVnetZone.com"
-  private_dns_zone_name = azurerm_private_dns_zone.example.name
-  virtual_network_id    = azurerm_virtual_network.ABI-network.id
-  resource_group_name   = azurerm_resource_group.rg.name
 }
 
 # Generate random value for the name
