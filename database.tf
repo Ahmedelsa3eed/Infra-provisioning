@@ -8,7 +8,7 @@ resource "azurerm_mysql_flexible_server" "example" {
   
   backup_retention_days  = 7
   delegated_subnet_id    = azurerm_subnet.ABI-subnet.id
-  private_dns_zone_id    = azurerm_private_dns_zone.example.id
+  private_dns_zone_id    = azurerm_private_dns_zone.zone.id
   sku_name               = "B_Standard_B1s"
 
   depends_on = [azurerm_private_dns_zone_virtual_network_link.example]
